@@ -9,25 +9,34 @@ const LOCAL_STORAGE_KEY = 'campaigns';
 function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [showModal, setShowModal] = useState(false);
+  const [isReady, setIsReady] = useState(false); // ← clave
 
-  // Load campaigns from localStorage once on mount
+  // Cargar campañas desde localStorage
   useEffect(() => {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
-      if (stored) setCampaigns(JSON.parse(stored));
+      console.log(stored);
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setCampaigns(parsed);
+      }
     } catch (err) {
       console.error('Failed to load campaigns:', err);
+    } finally {
+      setIsReady(true); // ← solo una vez se cargan
     }
   }, []);
 
-  // Persist changes to localStorage
+  // Guardar campañas solo cuando `isReady === true`
   useEffect(() => {
+    if (!isReady) return;
     try {
       localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(campaigns));
     } catch (err) {
       console.error('Failed to save campaigns:', err);
     }
-  }, [campaigns]);
+  }, [campaigns, isReady]);
+
 
   const addCampaign = (campaign: Campaign) => {
     setCampaigns((prev) => [...prev, campaign]);
@@ -39,7 +48,7 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-zinc-900 text-white flex items-center justify-center p-4">
+    <div className="min-h-screen min-w-screen bg-zinc-900 text-white flex items-center justify-center p-4">
       <div className="w-full max-w-4xl bg-zinc-800 rounded-lg shadow-xl p-8 flex flex-col gap-6">
         <div className="flex items-center justify-between">
           <h1 className="text-3xl font-bold">Campaign Manager</h1>
