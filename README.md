@@ -37,6 +37,6 @@ A campaign management app built with **React** and **TypeScript**, featuring per
 ## 🛠️ Installation
 
 ```bash
-git clone https://github.com/FabriDipolito/campaign-manager.git
+git clone https://github.com/FabriDipolito/FrontStoryTest-FabricioDipolito.git
 npm install
 npm run dev
