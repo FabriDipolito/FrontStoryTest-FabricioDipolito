@@ -9,9 +9,8 @@ const LOCAL_STORAGE_KEY = 'campaigns';
 function App() {
   const [campaigns, setCampaigns] = useState<Campaign[]>([]);
   const [showModal, setShowModal] = useState(false);
-  const [isReady, setIsReady] = useState(false); // ← clave
+  const [isReady, setIsReady] = useState(false);
 
-  // Cargar campañas desde localStorage
   useEffect(() => {
     try {
       const stored = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -23,11 +22,10 @@ function App() {
     } catch (err) {
       console.error('Failed to load campaigns:', err);
     } finally {
-      setIsReady(true); // ← solo una vez se cargan
+      setIsReady(true);
     }
   }, []);
 
-  // Guardar campañas solo cuando `isReady === true`
   useEffect(() => {
     if (!isReady) return;
     try {
@@ -60,13 +58,11 @@ function App() {
           </button>
         </div>
 
-        {/* Scrollable Table Section */}
         <div className="overflow-y-auto max-h-[400px] pr-2 custom-scrollbar">
           <CampaignTable campaigns={campaigns} onDelete={deleteCampaign} />
         </div>
       </div>
 
-      {/* Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50">
           <div className="bg-zinc-900 text-white rounded-lg p-6 w-full max-w-lg shadow-xl relative fade-in">

@@ -21,7 +21,7 @@ export default function CampaignForm({ onAdd, onClose }: Props) {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
-    setError(null); // limpiar error si corrige
+    setError(null);
   };
 
   const validateFields = () => {
